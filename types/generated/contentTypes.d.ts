@@ -399,6 +399,36 @@ export interface ApiSlideSlide extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiSlideentrepriseSlideentreprise
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'slideentreprises';
+  info: {
+    displayName: 'slideentreprise';
+    pluralName: 'slideentreprises';
+    singularName: 'slideentreprise';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'> &
+      Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::slideentreprise.slideentreprise'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiSliderealisationSliderealisation
   extends Struct.CollectionTypeSchema {
   collectionName: 'sliderealisations';
@@ -939,6 +969,7 @@ declare module '@strapi/strapi' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::slide.slide': ApiSlideSlide;
+      'api::slideentreprise.slideentreprise': ApiSlideentrepriseSlideentreprise;
       'api::sliderealisation.sliderealisation': ApiSliderealisationSliderealisation;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
