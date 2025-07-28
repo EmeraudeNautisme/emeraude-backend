@@ -373,6 +373,36 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiMessageMessage extends Struct.CollectionTypeSchema {
+  collectionName: 'messages';
+  info: {
+    displayName: 'message';
+    pluralName: 'messages';
+    singularName: 'message';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    email: Schema.Attribute.String & Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::message.message'
+    > &
+      Schema.Attribute.Private;
+    message: Schema.Attribute.Text & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    telephone: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiSlideSlide extends Struct.CollectionTypeSchema {
   collectionName: 'slides';
   info: {
@@ -968,6 +998,7 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::message.message': ApiMessageMessage;
       'api::slide.slide': ApiSlideSlide;
       'api::slideentreprise.slideentreprise': ApiSlideentrepriseSlideentreprise;
       'api::sliderealisation.sliderealisation': ApiSliderealisationSliderealisation;
